@@ -1,4 +1,4 @@
-# run_linkedin_graphql.py
+
 import json, time, requests
 from urllib.parse import urlencode, quote
 import pandas as pd
@@ -64,8 +64,8 @@ def extract_profiles(data):
 
 
 def main(num, company_id, COMPANY_SLUG, headers):
-    # url = f"https://www.linkedin.com/voyager/api/graphql?variables=(start:{20},origin:FACETED_SEARCH,query:(flagshipSearchIntent:ORGANIZATIONS_PEOPLE_ALUMNI,queryParameters:List((key:currentCompany,value:List({company_id})),(key:resultType,value:List(ORGANIZATION_ALUMNI))),includeFiltersInResponse:true),count:20)&queryId=voyagerSearchDashClusters.5ba32757c00b31aea747c8bebb92855c"
-    url = "https://www.linkedin.com/voyager/api/graphql?variables=(start:24,origin:FACETED_SEARCH,query:(flagshipSearchIntent:ORGANIZATIONS_PEOPLE_ALUMNI,queryParameters:List((key:currentCompany,value:List(1362039)),(key:resultType,value:List(ORGANIZATION_ALUMNI))),includeFiltersInResponse:true),count:12)&queryId=voyagerSearchDashClusters.5ba32757c00b31aea747c8bebb92855c"
+    url = f"https://www.linkedin.com/voyager/api/graphql?variables=(start:{num},origin:FACETED_SEARCH,query:(flagshipSearchIntent:ORGANIZATIONS_PEOPLE_ALUMNI,queryParameters:List((key:currentCompany,value:List({company_id})),(key:resultType,value:List(ORGANIZATION_ALUMNI))),includeFiltersInResponse:true),count:20)&queryId=voyagerSearchDashClusters.5ba32757c00b31aea747c8bebb92855c"
+    # url = "https://www.linkedin.com/voyager/api/graphql?variables=(start:24,origin:FACETED_SEARCH,query:(flagshipSearchIntent:ORGANIZATIONS_PEOPLE_ALUMNI,queryParameters:List((key:currentCompany,value:List(1362039)),(key:resultType,value:List(ORGANIZATION_ALUMNI))),includeFiltersInResponse:true),count:12)&queryId=voyagerSearchDashClusters.5ba32757c00b31aea747c8bebb92855c"
 
     response = requests.get(url, headers=headers, timeout=10)
     print("Status:", response.status_code)
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     # COMPANY_SLUG = "investec"
     company_id = 1362039
     COMPANY_SLUG = "neosoft"
-    for num in range(0, 20, 20):
+    for num in range(0, 60, 20):
         print(f"[+] Fetching profiles starting from index {num}...")
         main(num, company_id, COMPANY_SLUG, headers)
         time.sleep(10)
